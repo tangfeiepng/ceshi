@@ -1,0 +1,69 @@
+SELECT
+	`sqlser_crm`.`com_member`.`ID` AS `id`,
+	`sqlser_crm`.`com_member`.`RealName` AS `name`,
+	`sqlser_crm`.`com_member`.`Address` AS `address`,
+	`sqlser_crm`.`com_member`.`Lng` AS `longitude`,
+	`sqlser_crm`.`com_member`.`Lat` AS `latitude`,
+	`sqlser_crm`.`com_member`.`Photo` AS `signs_img`,
+	`f_status` ( `sqlser_crm`.`com_member`.`Status`, `sqlser_crm`.`com_membercompany`.`IsUpd` ) AS `status`,
+	`sqlser_crm`.`com_member`.`Mobile` AS `contact_phone`,
+	`sqlser_crm`.`com_member`.`Contact` AS `contact_name`,
+	`f_pathToProvinceCityArea` ( `sqlser_crm`.`com_member`.`Area_Name`, 1 ) AS `province`,
+	`f_pathToProvinceCityArea` ( `sqlser_crm`.`com_member`.`Area_Name`, 2 ) AS `city`,
+	`f_pathToProvinceCityArea` ( `sqlser_crm`.`com_member`.`Area_Name`, 3 ) AS `district`,
+	`f_dateToTime` ( `sqlser_crm`.`com_member`.`AddDateTime` ) AS `create_time`,
+	`sqlser_crm`.`com_membermanager`.`Manager_ID` AS `uid`,
+	`sqlser_crm`.`com_membermanager`.`Department_ID` AS `department_id`,
+	`sqlser_crm`.`com_membermanager`.`Company_ID` AS `company_id`,(
+	SELECT
+		`sqlser_crm`.`com_memberingroup`.`Group_ID` 
+	FROM
+		`sqlser_crm`.`com_memberingroup` 
+	WHERE
+		( `sqlser_crm`.`com_memberingroup`.`Member_ID` = `sqlser_crm`.`com_member`.`ID` ) 
+	ORDER BY
+		`sqlser_crm`.`com_memberingroup`.`OperationTime` 
+		LIMIT 1 
+	) AS `group_id`,
+	`sqlser_crm`.`com_membercompany`.`Level_ID` AS `level_id`,
+	`sqlser_crm`.`com_membercompany`.`UpdNote` AS `close_desc` 
+FROM
+	(((
+				`sqlser_crm`.`com_member`
+				LEFT JOIN `sqlser_crm`.`com_membermanager` ON ((
+						`sqlser_crm`.`com_membermanager`.`Member_ID` = `sqlser_crm`.`com_member`.`ID` 
+					)))
+			JOIN `sqlser_crm`.`com_manager` ON ((
+					`sqlser_crm`.`com_manager`.`ID` = `sqlser_crm`.`com_membermanager`.`Manager_ID` 
+				)))
+		JOIN `sqlser_crm`.`com_membercompany` ON ((
+				`sqlser_crm`.`com_membercompany`.`Member_ID` = `sqlser_crm`.`com_member`.`ID` 
+			))) 
+WHERE
+	(
+	`sqlser_crm`.`com_manager`.`IsQuit_x` = 0)
+
+
+
+
+
+
+
+select `sqlser_crm`.`com_membergroup`.`ID` AS `id`,`sqlser_crm`.`com_membergroup`.`Company_ID` AS `company_id`,`sqlser_crm`.`com_membergroup`.`ParentID` AS `pid`,`sqlser_crm`.`com_membergroup`.`Name` AS `name`,`sqlser_crm`.`com_membergroup`.`Sequence` AS `sort`,`f_dateToTime`(`sqlser_crm`.`com_membergroup`.`AddDateTime`) AS `create_time`,`f_dateToTime`(`sqlser_crm`.`com_membergroup`.`OperationTime`) AS `update_time`,`sqlser_crm`.`com_membergroup`.`Status` AS `status` from `sqlser_crm`.`com_membergroup`
+
+
+select `sqlser_crm`.`com_product`.`ID` AS `id`,`sqlser_crm`.`com_product`.`Class_ID` AS `cate_id`,`sqlser_crm`.`com_product`.`Name` AS `goods_title`,`sqlser_crm`.`com_product`.`Unit_Name` AS `goods_spec`,`sqlser_crm`.`com_product`.`Status` AS `status`,`f_dateToTime`(`sqlser_crm`.`com_product`.`AddDateTime`) AS `create_time`,`f_dateToTime`(`sqlser_crm`.`com_product`.`OperationTime`) AS `update_time`,concat('http://img.runtian.cn/1541/Product/',`sqlser_crm`.`com_productdetail`.`SmallImg`) AS `goods_logo`,concat('http://img.runtian.cn/1541/Product/',`sqlser_crm`.`com_productdetail`.`BigImg`) AS `goods_image`,`sqlser_crm`.`com_product`.`SalePrice` AS `goods_price` from (`sqlser_crm`.`com_product` join `sqlser_crm`.`com_productdetail` on((`sqlser_crm`.`com_productdetail`.`Product_ID` = `sqlser_crm`.`com_product`.`ID`)))
+
+
+select `sqlser_crm`.`com_productclass`.`ID` AS `id`,`sqlser_crm`.`com_productclass`.`Name` AS `cate_title`,`sqlser_crm`.`com_productclass`.`Status` AS `status`,`f_dateToTime`(`sqlser_crm`.`com_productclass`.`AddDateTime`) AS `create_time`,`f_dateToTime`(`sqlser_crm`.`com_productclass`.`OperationTime`) AS `update_time`,`sqlser_crm`.`com_productclass`.`ParentID` AS `pid` from `sqlser_crm`.`com_productclass`
+
+
+select '1' AS `company_id`,`sqlser_crm`.`com_department`.`ParentID` AS `pid`,`sqlser_crm`.`com_department`.`Name` AS `name`,`f_boolToInt`(`sqlser_crm`.`com_department`.`Status`) AS `status`,`f_dateToTime`(`sqlser_crm`.`com_department`.`AddDateTime`) AS `create_time`,`f_dateToTime`(`sqlser_crm`.`com_department`.`OperationTime`) AS `update_time`,`sqlser_crm`.`com_department`.`ID` AS `id` from `sqlser_crm`.`com_department`
+
+
+select `sqlser_crm`.`sys_role`.`ID` AS `id`,`sqlser_crm`.`sys_role`.`Name` AS `name`,`sqlser_crm`.`sys_role`.`Department_ID` AS `department_id`,`sqlser_crm`.`sys_role`.`Status` AS `status`,`f_dateToTime`(`sqlser_crm`.`sys_role`.`AddDateTime`) AS `create_time`,`f_dateToTime`(`sqlser_crm`.`sys_role`.`OperationTime`) AS `update_time` from `sqlser_crm`.`sys_role`
+
+
+select `sqlser_crm`.`com_manager`.`ID` AS `id`,`sqlser_crm`.`com_manager`.`Sex` AS `sex`,`sqlser_crm`.`com_manager`.`Email` AS `mail`,`sqlser_crm`.`com_manager`.`Mobile` AS `mobile`,`sqlser_crm`.`com_manager`.`LoginName` AS `phone`,`sqlser_crm`.`com_manager`.`IDNumber` AS `id_card`,`sqlser_crm`.`com_manager`.`Flag` AS `area`,`sqlser_crm`.`com_manager`.`SafeLogin` AS `safe_login`,`sqlser_crm`.`com_manager`.`RealName` AS `username`,`sqlser_crm`.`com_manager`.`LoginName` AS `user_id`,`sqlser_crm`.`com_manager`.`Photo` AS `headimg`,`sqlser_crm`.`com_manager`.`IsLeader` AS `is_leader`,`sqlser_crm`.`com_manager`.`Company_ID` AS `company_id`,`sqlser_crm`.`com_manager`.`IMEI` AS `imei`,`sqlser_crm`.`com_manager`.`IMSI` AS `imsi`,`f_dateToTime`(`sqlser_crm`.`com_manager`.`StartDate`) AS `entry_time`,`f_dateToTime`(`sqlser_crm`.`com_manager`.`EndDate`) AS `leave_time`,'111' AS `uuid`,'74e9c9f2de6a1f2f73b8d62727449a5e' AS `password`,`sqlser_crm`.`com_managerinorg`.`Department_ID` AS `department_id`,`sqlser_crm`.`com_managerinorg`.`Role_ID` AS `role_id` from (`sqlser_crm`.`com_manager` join `sqlser_crm`.`com_managerinorg` on((`sqlser_crm`.`com_managerinorg`.`Manager_ID` = `sqlser_crm`.`com_manager`.`ID`))) where (`sqlser_crm`.`com_managerinorg`.`IsQuit` = 0)
+
+select `ku_crm_approval`.`id` AS `id`,`ku_crm_approval`.`approval_type_name` AS `approval_type_name`,`ku_crm_approval`.`status` AS `status`,`ku_crm_approval`.`is_deleted` AS `is_deleted`,`ku_crm_approval`.`create_time` AS `create_time`,`ku_crm_approval`.`headimg` AS `headimg`,`ku_crm_approval`.`user_id` AS `user_id`,`ku_crm_approval`.`approval_type_id` AS `approval_type_id`,`ku_crm_approval`.`approval_user_id` AS `approval_user_id`,`ku_crm_approval`.`username` AS `username`,`ku_crm_approval`.`update_time` AS `update_time`,`f_ku_crm_approval`(`ku_crm_approval`.`approval_type_id`,`ku_crm_approval`.`id`,1) AS `field1`,`f_ku_crm_approval`(`ku_crm_approval`.`approval_type_id`,`ku_crm_approval`.`id`,2) AS `field2`,`f_ku_crm_approval`(`ku_crm_approval`.`approval_type_id`,`ku_crm_approval`.`id`,3) AS `field3` from `ku_crm_approval`
