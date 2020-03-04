@@ -1,6 +1,8 @@
 {
     "name": "tangfeipeng/ceshi",
     "description": "这是我的第一个composer包工具",
+    "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "tangfeipeng",
@@ -8,7 +10,6 @@
         }
     ],
     "minimum-stability": "dev",
-    "require": {},
     "require": {
         "php": ">=7.0.0"
     },
