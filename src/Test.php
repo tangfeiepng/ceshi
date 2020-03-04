@@ -13,6 +13,6 @@ class Test
 {
     public static function info()
     {
-        echo "This is Ford Escape2016!<br />";
+        echo "This is Ford asdasda!<br />";
     }
 }
