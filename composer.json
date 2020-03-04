@@ -1,0 +1,12 @@
+{
+    "name": "tangfeipeng/ceshi",
+    "description": "这是我的第一个composer包工具",
+    "authors": [
+        {
+            "name": "tangfeipeng",
+            "email": "2623464012@qq.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
