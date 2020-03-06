@@ -7,9 +7,9 @@
  * with this source code in the file LICENSE.
  */
 
-namespace Tests;
+namespace Test;
 
-class Tests
+class Test
 {
     public static function info()
     {
